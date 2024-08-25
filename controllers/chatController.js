@@ -31,6 +31,30 @@ exports.storeMessage = async (req, res) => {
   }
 };
 
+exports.getMessages = async (req, res) => {
+ try {
+  console.log("================================")
+  const { sender, receiver } = req.query;
+  console.log ("+++++++++++++++++++",sender, receiver)
+  const chat = await Chat.findOne({
+    participants: { $all: [sender, receiver] }
+  });
+  console.log("chat------------------",chat)
+  
+  if(chat)
+    {
+      return res.status(200).json({status:true,data:chat})
+    } else {
+      {return res.status(200).json({status:false,data:chat})}
+
+    }
+ }
+ catch (error) {
+  console.log (error)
+  
+ }
+}
+
 
 
 
