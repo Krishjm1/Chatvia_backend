@@ -27,12 +27,13 @@ const io = new Server(httpServer, {
 app.set('io', io);
 
 io.on('connection', (socket) => {
-  socket.on('joinChat', (chatId) => {
-    socket.join(chatId);
+  socket.on('joinChat', (userId) => {
+    socket.join(userId);
   });
 
   socket.on('sendMessage', (message) => {
-    io.to(message.chatId).emit('receiveMessage', message);
+    console.log("message socket---------------",message)
+    io.to(message.receiver).emit('receiveMessage', message);
   });
 
   socket.on('disconnect', () => {
